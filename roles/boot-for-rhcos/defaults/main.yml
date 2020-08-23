@@ -1,0 +1,13 @@
+---
+# defaults file for boot-for-rhcos
+RHCOS_KERNEL_PATH: http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
+RHCOS_BOOT_DISK: hd0,msdos1
+#RHCOS_BOOT_DISK: hd0,gpt1
+RHCOS_BOOT_PATH: /boot
+RHCOS_BOOT_KERNEL: rhcos-installer-kernel-x86_64
+RHCOS_BOOT_INITRD: rhcos-installer-initramfs.x86_64.img
+RHCOS_BOOT_METAL: rhcos-4.5.2-x86_64-metal.x86_64.raw.gz
+RHCOS_IP: ip={{ ansible_default_ipv4['address'] }}::{{ ansible_default_ipv4['gateway'] }}:{{ ansible_default_ipv4['netmask'] }}:{{ inventory_hostname }}::none 
+RHCOS_INSTALL_DEV: sda
+RHCOS_OPTS: ''
+RHCOS_IGN_PATH: 'http://bastion.example.com/ocp4'

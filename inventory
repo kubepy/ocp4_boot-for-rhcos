@@ -1,0 +1,23 @@
+[all:vars]
+#ansible_user=core
+#ansible_become=yes
+####for coreos reinstall####
+#RHCOS_BOOT_DISK=hd0,gpt1
+#RHCOS_BOOT_PATH=/
+############################
+RHCOS_BOOT_DISK=hd0,msdos1
+RHCOS_BOOT_PATH=/boot
+RHCOS_INSTALL_DEV=sda
+RHCOS_KERNEL_PATH=http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
+RHCOS_IGN_PATH=http://bastion.example.com/rhel-iso/ign
+#RHCOS_IP='ip=dhcp'
+RHCOS_OPTS='nameserver=1.1.1.1 nameserver=8.8.8.8'
+
+[bootstrap]
+bootstrap.ocp4.example.com ansible_host=149.28.81.119
+
+[master]
+master-0.ocp4.example.com ansible_host=149.28.199.48
+
+[worker]
+worker-0.ocp4.example.com ansible_host=149.28.199.47

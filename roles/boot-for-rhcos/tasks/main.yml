@@ -1,0 +1,33 @@
+---
+# tasks file for boot-for-rhcos
+
+- name: Copy kernel file to remote machine /boot/
+  copy:
+    src: "{{ RHCOS_BOOT_KERNEL }}"
+    dest: /boot/
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r 
+
+- name: Copy initrd file to remote machine /boot/
+  copy:
+    src: "{{ RHCOS_BOOT_INITRD }}"
+    dest: /boot/
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Gather machine IP info
+  setup:
+    filter: 'ansible_default_ipv4*'
+
+- name: Override /etc/grub.d/40_custom
+  template:
+    src: 40_custom.j2
+    dest: /etc/grub.d/40_custom
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Setup Grub boot for RHCOS
+  script: "update_grub_for_rhcos.sh"

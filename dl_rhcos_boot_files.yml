@@ -1,0 +1,14 @@
+- hosts: localhost
+  gather_facts: false
+  vars:
+    - RHCOS_KERNEL_PATH: http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
+  tasks:
+     - name: Download RHCOS KERNEL Files
+       get_url:
+         url: "{{ RHCOS_KERNEL_PATH }}/rhcos-installer-kernel-x86_64"
+         dest: roles/boot-for-rhcos/files/
+
+     - name: Download RHCOS INITRD Files
+       get_url:
+         url: "{{ RHCOS_KERNEL_PATH }}/rhcos-installer-initramfs.x86_64.img"
+         dest: roles/boot-for-rhcos/files/
