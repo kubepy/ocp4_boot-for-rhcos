@@ -1,12 +1,17 @@
 [all:vars]
 #ansible_user=core
 #ansible_become=yes
+
 ####for coreos reinstall####
 #RHCOS_BOOT_DISK=hd0,gpt1
-#RHCOS_BOOT_PATH=/
+#RHCOS_BOOT_PATH=''
 ############################
+
+####for rhel7 reinstall####
 RHCOS_BOOT_DISK=hd0,msdos1
 RHCOS_BOOT_PATH=/boot
+############################
+
 RHCOS_INSTALL_DEV=sda
 RHCOS_KERNEL_PATH=http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
 RHCOS_IGN_PATH=http://bastion.example.com/rhel-iso/ign
