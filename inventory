@@ -14,6 +14,7 @@ RHCOS_BOOT_PATH=/boot
 
 RHCOS_INSTALL_DEV=sda
 RHCOS_KERNEL_PATH=http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
+#RHCOS_BOOT_METAL=rhcos-4.5.2-x86_64-metal.x86_64.raw.gz
 RHCOS_IGN_PATH=http://bastion.example.com/rhel-iso/ign
 #RHCOS_IP='ip=dhcp'
 RHCOS_OPTS='nameserver=1.1.1.1 nameserver=8.8.8.8'
