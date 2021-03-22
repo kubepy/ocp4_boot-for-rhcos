@@ -1,29 +1,50 @@
 [all:vars]
-#ansible_user=core
-#ansible_become=yes
 
-####for coreos reinstall####
+####USER####
+#ansible_user=core
+ansible_become=yes
+############################
+
+####BIOS(auto-detect)####
+#RHCOS_BOOT_DISK=hd0,msdos1
+#RHCOS_BOOT_PATH=''
+############################
+
+####UEFI(auto-detect)####
 #RHCOS_BOOT_DISK=hd0,gpt1
 #RHCOS_BOOT_PATH=''
 ############################
 
-####for rhel7 reinstall####
-RHCOS_BOOT_DISK=hd0,msdos1
-RHCOS_BOOT_PATH=/boot
+####DISK####
+RHCOS_INSTALL_DEV=sda
 ############################
 
-RHCOS_INSTALL_DEV=sda
-RHCOS_KERNEL_PATH=http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
-#RHCOS_BOOT_METAL=rhcos-4.5.2-x86_64-metal.x86_64.raw.gz
-RHCOS_IGN_PATH=http://bastion.example.com/rhel-iso/ign
+####RESOURCES####
+#RHCOS_KERNEL_PATH=http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.7/4.7.0
+RHCOS_KERNEL_PATH=http://192.168.14.30:8080
+RHCOS_BOOT_KERNEL=rhcos-live-kernel-x86_64
+RHCOS_BOOT_INITRD=rhcos-live-initramfs.x86_64.img
+RHCOS_BOOT_ROOTFS=rhcos-live-rootfs.x86_64.img
+############################
+
+####IGNITION####
+#RHCOS_IGN_PATH=http://bastion.ocp4.example.com:8080/ign
+RHCOS_IGN_PATH=http://192.168.14.30:8080/ign
 #RHCOS_IP='ip=dhcp'
-RHCOS_OPTS='nameserver=1.1.1.1 nameserver=8.8.8.8'
+#RHCOS_OPTS='nameserver=1.1.1.1 nameserver=8.8.8.8'
+RHCOS_OPTS='nameserver=192.168.14.30'
+################
 
+####VM_HOST####
 [bootstrap]
-bootstrap.ocp4.example.com ansible_host=149.28.81.119
+bootstrap.ocp4.example.com ansible_host=192.168.14.31
 
-[master]
-master-0.ocp4.example.com ansible_host=149.28.199.48
-
-[worker]
-worker-0.ocp4.example.com ansible_host=149.28.199.47
+#[master]
+#master-0.ocp4.example.com ansible_host=192.168.14.32
+#master-1.ocp4.example.com ansible_host=192.168.14.33
+#master-2.ocp4.example.com ansible_host=192.168.14.34
+#
+#[worker]
+#worker-0.ocp4.example.com ansible_host=192.168.14.35
+#master-1.ocp4.example.com ansible_host=192.168.14.36
+#master-2.ocp4.example.com ansible_host=192.168.14.37

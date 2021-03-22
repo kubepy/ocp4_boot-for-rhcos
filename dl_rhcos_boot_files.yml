@@ -1,14 +1,17 @@
 - hosts: localhost
   gather_facts: false
   vars:
-    - RHCOS_KERNEL_PATH: http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.5/4.5.2
+#    RHCOS_KERNEL_PATH: http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.7/4.7.0 
+    RHCOS_KERNEL_PATH: http://192.168.14.30:8080
+  environment:
+#    http_proxy: http://192.168.14.1:8080
   tasks:
      - name: Download RHCOS KERNEL Files
        get_url:
-         url: "{{ RHCOS_KERNEL_PATH }}/rhcos-installer-kernel-x86_64"
+         url: "{{ RHCOS_KERNEL_PATH }}/rhcos-live-kernel-x86_64"
          dest: roles/boot-for-rhcos/files/
 
      - name: Download RHCOS INITRD Files
        get_url:
-         url: "{{ RHCOS_KERNEL_PATH }}/rhcos-installer-initramfs.x86_64.img"
+         url: "{{ RHCOS_KERNEL_PATH }}/rhcos-live-initramfs.x86_64.img"
          dest: roles/boot-for-rhcos/files/

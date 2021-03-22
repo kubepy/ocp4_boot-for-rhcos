@@ -17,17 +17,53 @@
     group: root
     mode: u=rw,g=r,o=r
 
-- name: Gather machine IP info
+- name: Gather VM Ansible variables
   setup:
-    filter: 'ansible_default_ipv4*'
 
-- name: Override /etc/grub.d/40_custom
+- name: Determine if the system is booted in [BIOS] or [UEFI] mode
+  shell: |
+    [ -d /sys/firmware/efi ] && echo UEFI || echo BIOS
+  register: OS_BOOT_MODE
+  changed_when: false
+
+- name: Determine if the disk is [MSDOS] or [GPT]
+  shell: |
+    DISK_PARITITION_DEV="{{ (ansible_facts.mounts | selectattr('mount', 'in', '/boot') | list | sort(attribute='device'))[-1]['device'] | regex_replace('^(.+)([0-9]{1})$','\1') }}"
+    blkid -o export "$DISK_PARITITION_DEV" | grep 'PTTYPE=dos' > /dev/null 2>&1
+    if [ "$?" == "0" ]; then
+        echo "hd0,msdos{{ (ansible_facts.mounts | selectattr('mount', 'in', '/boot') | list | sort(attribute='device'))[-1]['device'] | list | last }}"
+    else
+        echo "hd0,gpt{{ (ansible_facts.mounts | selectattr('mount', 'in', '/boot') | list | sort(attribute='device'))[-1]['device'] | list | last }}"
+    fi
+  register: DISK_PARTITION_TYPE
+  changed_when: false
+
+- name: Print the disk is [MSDOS] or [GPT]
+  debug:
+    msg: "{{ inventory_hostname }} {{DISK_PARTITION_TYPE.stdout }}"
+
+- name: Determine 'RHCOS_BOOT_DISK' variables
+  set_fact:
+    RHCOS_BOOT_DISK: "{{ DISK_PARTITION_TYPE.stdout }}" 
+  changed_when: false
+
+- name: (BIOS) Override /etc/grub.d/40_custom
   template:
-    src: 40_custom.j2
+    src: 40_custom_bios.j2
     dest: /etc/grub.d/40_custom
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
+  when: "'BIOS' in OS_BOOT_MODE.stdout"
+
+- name: (UEFI) Override /etc/grub.d/40_custom
+  template:
+    src: 40_custom_uefi.j2
+    dest: /etc/grub.d/40_custom
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when: "'UEFI' in OS_BOOT_MODE.stdout"
 
 - name: Setup Grub boot for RHCOS
   script: "update_grub_for_rhcos.sh"
