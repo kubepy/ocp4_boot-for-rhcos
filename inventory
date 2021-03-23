@@ -39,12 +39,12 @@ RHCOS_OPTS='nameserver=192.168.14.30'
 [bootstrap]
 bootstrap.ocp4.example.com ansible_host=192.168.14.31
 
-#[master]
-#master-0.ocp4.example.com ansible_host=192.168.14.32
-#master-1.ocp4.example.com ansible_host=192.168.14.33
-#master-2.ocp4.example.com ansible_host=192.168.14.34
-#
-#[worker]
-#worker-0.ocp4.example.com ansible_host=192.168.14.35
-#master-1.ocp4.example.com ansible_host=192.168.14.36
-#master-2.ocp4.example.com ansible_host=192.168.14.37
+[master]
+master-0.ocp4.example.com ansible_host=192.168.14.32
+master-1.ocp4.example.com ansible_host=192.168.14.33
+master-2.ocp4.example.com ansible_host=192.168.14.34
+
+[worker]
+worker-0.ocp4.example.com ansible_host=192.168.14.35
+worker-1.ocp4.example.com ansible_host=192.168.14.36
+worker-2.ocp4.example.com ansible_host=192.168.14.37
