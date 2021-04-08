@@ -16,7 +16,7 @@ ansible_become=yes
 ############################
 
 ####DISK####
-RHCOS_INSTALL_DEV=sda
+#RHCOS_INSTALL_DEV=sda
 ############################
 
 ####RESOURCES####
