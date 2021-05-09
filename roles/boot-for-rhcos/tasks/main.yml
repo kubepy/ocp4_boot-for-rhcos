@@ -38,14 +38,15 @@
   register: DISK_PARTITION_TYPE
   changed_when: false
 
-- name: Print the disk is [MSDOS] or [GPT]
-  debug:
-    msg: "{{ inventory_hostname }} {{DISK_PARTITION_TYPE.stdout }}"
-
 - name: Determine 'RHCOS_BOOT_DISK' variables
   set_fact:
     RHCOS_BOOT_DISK: "{{ DISK_PARTITION_TYPE.stdout }}" 
   changed_when: false
+  when: RHCOS_BOOT_DISK == ''
+
+- name: Print the disk is [MSDOS] or [GPT]
+  debug:
+    msg: "{{ RHCOS_BOOT_DISK }}"
 
 - name: (BIOS) Override /etc/grub.d/40_custom
   template:
