@@ -1,8 +1,9 @@
 ---
 # defaults file for boot-for-rhcos
 RHCOS_KERNEL_PATH: http://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.7/4.7.0
-RHCOS_BOOT_DISK: hd0,msdos1
+#RHCOS_BOOT_DISK: hd0,msdos1
 #RHCOS_BOOT_DISK: hd0,gpt1
+RHCOS_BOOT_DISK: ''
 RHCOS_BOOT_PATH: ''
 RHCOS_BOOT_KERNEL: rhcos-live-kernel-x86_64
 RHCOS_BOOT_INITRD: rhcos-live-initramfs.x86_64.img
