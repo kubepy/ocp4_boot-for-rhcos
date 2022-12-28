@@ -48,3 +48,5 @@ master-2.ocp4.example.com ansible_host=192.168.14.34
 worker-0.ocp4.example.com ansible_host=192.168.14.35
 worker-1.ocp4.example.com ansible_host=192.168.14.36
 worker-2.ocp4.example.com ansible_host=192.168.14.37
+#ipv6
+worker-3.ocp4.example.com RHCOS_OPTS='nameserver=192.168.14.10 ip=[fd1c:c6a6:ec8c:3:40ba:24ff:fe2e:f604]::[fd1c:c6a6:ec8c:3::1]:64:::none'
